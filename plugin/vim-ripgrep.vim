@@ -90,5 +90,9 @@ fun! s:RgHasFile(path)
   return filereadable(a:path) || isdirectory(a:path)
 endfun
 
+fun! s:RgShowRoot()
+  echo s:RgRootDir()
+endfun
+
 command! -nargs=* Rg :call s:Rg(<q-args>)
-command! RgDir :call s:RgRootDir()
+command! RgRoot :call s:RgShowRoot()
