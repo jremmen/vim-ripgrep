@@ -91,7 +91,11 @@ fun! s:RgHasFile(path)
 endfun
 
 fun! s:RgShowRoot()
-  echo s:RgRootDir()
+  if exists('g:rg_derive_root')
+    echo s:RgRootDir()
+  else
+    echo getcwd()
+  endif
 endfun
 
 command! -nargs=* Rg :call s:Rg(<q-args>)
