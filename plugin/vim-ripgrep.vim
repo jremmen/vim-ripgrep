@@ -1,6 +1,6 @@
-"if exists('g:loaded_rg') || &cp
-"  finish
-"endif
+if exists('g:loaded_rg') || &cp
+  finish
+endif
 
 let g:loaded_rg = 1
 
