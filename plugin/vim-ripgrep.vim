@@ -21,7 +21,15 @@ if !exists('g:rg_rootfiles')
 endif
 
 fun! s:Rg(txt)
-  call s:RgGrepContext(function('s:RgSearch'), a:txt)
+  call s:RgGrepContext(function('s:RgSearch'), s:RgSearchTerm(a:txt))
+endfun
+
+fun! s:RgSearchTerm(txt)
+  if empty(a:txt)
+    return expand("<cword>")
+  else
+    return a:txt
+  endif
 endfun
 
 fun! s:RgSearch(txt)
