@@ -52,6 +52,10 @@ fun! s:RgGrepContext(search, txt)
   let l:grepformatb = &grepformat
   let &grepprg = g:rg_command
   let &grepformat = g:rg_format
+  let l:te = &t_te
+  let l:ti = &t_ti
+  set t_te=
+  set t_ti=
 
   if exists('g:rg_derive_root')
     call s:RgPathContext(a:search, a:txt)
@@ -59,6 +63,8 @@ fun! s:RgGrepContext(search, txt)
     call a:search(a:txt)
   endif
 
+  let &t_te=l:te
+  let &t_ti=l:ti
   let &grepprg = l:grepprgb
   let &grepformat = l:grepformatb
 endfun
