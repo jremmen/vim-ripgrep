@@ -112,5 +112,5 @@ fun! s:RgShowRoot()
   endif
 endfun
 
-command! -nargs=* Rg :call s:Rg(<q-args>)
-command! RgRoot :call s:RgShowRoot()
+command! -nargs=* -complete=file Rg :call s:Rg(<q-args>)
+command! -complete=file RgRoot :call s:RgShowRoot()
