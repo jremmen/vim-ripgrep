@@ -16,7 +16,7 @@ if !exists('g:rg_command')
   let g:rg_command = g:rg_binary . ' --vimgrep'
 endif
 
-if !exists('g:rg_rootfiles')
+if !exists('g:rg_root_types')
   let g:rg_root_types = ['.git']
 endif
 
