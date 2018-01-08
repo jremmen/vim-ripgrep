@@ -21,7 +21,11 @@ if !exists('g:rg_root_types')
 endif
 
 fun! s:Rg(txt)
-  call s:RgGrepContext(function('s:RgSearch'), s:RgSearchTerm(a:txt))
+  let l:txt = a:txt
+  if exists('g:rg_escape_vbars')
+    let l:txt = escape(l:txt, '|')
+  endif
+  call s:RgGrepContext(function('s:RgSearch'), s:RgSearchTerm(l:txt))
 endfun
 
 fun! s:RgSearchTerm(txt)
