@@ -35,7 +35,7 @@ endfun
 fun! s:RgSearch(txt)
   silent! exe 'grep! ' . a:txt
   if len(getqflist())
-    copen
+    botright copen
     redraw!
     if exists('g:rg_highlight')
       call s:RgHighlight(a:txt)
