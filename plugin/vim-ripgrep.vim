@@ -20,6 +20,10 @@ if !exists('g:rg_root_types')
   let g:rg_root_types = ['.git']
 endif
 
+if !exists('g:rg_window_location')
+  let g:rg_window_location = 'botright'
+endif
+
 fun! s:Rg(txt)
   call s:RgGrepContext(function('s:RgSearch'), s:RgSearchTerm(a:txt))
 endfun
@@ -35,7 +39,7 @@ endfun
 fun! s:RgSearch(txt)
   silent! exe 'grep! ' . a:txt
   if len(getqflist())
-    copen
+    exe g:rg_window_location 'copen'
     redraw!
     if exists('g:rg_highlight')
       call s:RgHighlight(a:txt)
