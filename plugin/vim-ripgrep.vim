@@ -54,7 +54,14 @@ fun! s:RgSearchTerm(txt)
 endfun
 
 fun! s:RgSearch(txt)
-  silent! exe 'grep! ' . '"' . a:txt . '"'
+  let l:rgopts = ' '
+  if &ignorecase == 1
+    let l:rgopts = l:rgopts . '-i '
+  endif
+  if &smartcase == 1
+    let l:rgopts = l:rgopts . '-S '
+  endif
+  silent! exe 'grep! ' . l:rgopts . '"' . a:txt . '"'
   if len(getqflist())
     exe g:rg_window_location 'copen'
     redraw!
