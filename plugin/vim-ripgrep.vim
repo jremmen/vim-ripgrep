@@ -82,8 +82,12 @@ fun! s:RgGrepContext(search, txt)
   let &grepformat = g:rg_format
   let l:te = &t_te
   let l:ti = &t_ti
+  let l:shellpipe_bak=&shellpipe
   set t_te=
   set t_ti=
+  if !has("win32")
+    let &shellpipe="&>"
+  endif
 
   if exists('g:rg_derive_root')
     call s:RgPathContext(a:search, a:txt)
@@ -91,6 +95,7 @@ fun! s:RgGrepContext(search, txt)
     call a:search(a:txt)
   endif
 
+  let &shellpipe=l:shellpipe_bak
   let &t_te=l:te
   let &t_ti=l:ti
   let &grepprg = l:grepprgb
