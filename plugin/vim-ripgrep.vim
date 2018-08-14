@@ -61,7 +61,9 @@ fun! s:RgGrepContext(search, txt)
   let l:shellpipe_bak=&shellpipe
   set t_te=
   set t_ti=
-  let &shellpipe="&>"
+  if !has("win32")
+    let &shellpipe="&>"
+  endif
 
   if exists('g:rg_derive_root')
     call s:RgPathContext(a:search, a:txt)
