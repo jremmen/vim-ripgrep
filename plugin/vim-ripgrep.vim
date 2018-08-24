@@ -25,7 +25,7 @@ if !exists('g:rg_window_location')
 endif
 
 fun! g:RgVisual() range
-  call s:RgGrepContext(function('s:RgSearch'), s:RgGetVisualSelection())
+  call s:RgGrepContext(function('s:RgSearch'), '"' . s:RgGetVisualSelection() . '"')
 endfun
 
 fun! s:Rg(txt)
@@ -61,7 +61,7 @@ fun! s:RgSearch(txt)
   if &smartcase == 1
     let l:rgopts = l:rgopts . '-S '
   endif
-  silent! exe 'grep! ' . l:rgopts . '"' . a:txt . '"'
+  silent! exe 'grep! ' . l:rgopts . a:txt
   if len(getqflist())
     exe g:rg_window_location 'copen'
     redraw!
