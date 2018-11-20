@@ -88,6 +88,9 @@ fun! s:RgGrepContext(search, txt)
   if !has("win32")
     let &shellpipe="&>"
   endif
+  if ($shell ==  "/bin/fish")
+      let &shellpipe="&"
+  endif
 
   if exists('g:rg_derive_root')
     call s:RgPathContext(a:search, a:txt)
