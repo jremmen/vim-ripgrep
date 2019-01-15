@@ -28,7 +28,7 @@ fun! g:RgVisual() range
   call s:RgGrepContext(function('s:RgSearch'), '"' . s:RgGetVisualSelection() . '"')
 endfun
 
-fun! s:Rg(txt)
+fun! g:Rg(txt)
   call s:RgGrepContext(function('s:RgSearch'), s:RgSearchTerm(a:txt))
 endfun
 
