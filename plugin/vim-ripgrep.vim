@@ -86,7 +86,7 @@ fun! s:RgGrepContext(search, txt)
   set t_te=
   set t_ti=
   if !has("win32")
-    let &shellpipe="&>"
+    let &shellpipe="2>&1 >"
   endif
 
   if exists('g:rg_derive_root')
