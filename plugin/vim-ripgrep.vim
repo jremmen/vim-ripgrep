@@ -24,6 +24,10 @@ if !exists('g:rg_window_location')
   let g:rg_window_location = 'botright'
 endif
 
+if !exists('g:rg_highlight_type')
+  let g:rg_highlight_type = 'keyword'
+endif
+
 fun! g:RgVisual() range
   call s:RgGrepContext(function('s:RgSearch'), '"' . s:RgGetVisualSelection() . '"')
 endfun
@@ -110,8 +114,7 @@ fun! s:RgPathContext(search, txt)
 endfun
 
 fun! s:RgHighlight(txt)
-  let @/=escape(substitute(a:txt, '"', '', 'g'), '|')
-  call feedkeys(":let &hlsearch=1\<CR>", 'n')
+  call matchadd(g:rg_highlight_type, a:txt)
 endfun
 
 fun! s:RgRootDir()
