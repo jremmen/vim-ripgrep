@@ -33,16 +33,16 @@ fun! s:Rg(txt)
 endfun
 
 fun! s:RgGetVisualSelection()
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+  " Why is this not a built-in Vim script function?!
+  let [line_start, column_start] = getpos("'<")[1:2]
+  let [line_end, column_end] = getpos("'>")[1:2]
+  let lines = getline(line_start, line_end)
+  if len(lines) == 0
+    return ''
+  endif
+  let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][column_start - 1:]
+  return join(lines, "\n")
 endfun
 
 fun! s:RgSearchTerm(txt)
@@ -118,14 +118,20 @@ fun! s:RgRootDir()
   let l:cwd = getcwd()
   let l:dirs = split(getcwd(), '/')
 
-  for l:dir in reverse(copy(l:dirs))
-    for l:type in g:rg_root_types
-      let l:path = s:RgMakePath(l:dirs, l:dir)
-      if s:RgHasFile(l:path.'/'.l:type)
-        return l:path
-      endif
+  "If NERDTree is open get the root of it to use as a path
+  if exists('b:NERDTree')
+    let l:root = b:NERDTree.root.path.str()
+    return l:root
+  else
+    for l:dir in reverse(copy(l:dirs))
+      for l:type in g:rg_root_types
+        let l:path = s:RgMakePath(l:dirs, l:dir)
+        if s:RgHasFile(l:path.'/'.l:type)
+          return l:path
+        endif
+      endfor
     endfor
-  endfor
+  endif
   return l:cwd
 endfun
 
