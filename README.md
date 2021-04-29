@@ -22,3 +22,15 @@ Word under cursor will be searched if no argument is passed to `Rg`
 Show root search dir
 
     :RgRoot
+
+## Dependencies
+
+Please make sure you have 'rg' binary correctly installed in your system
+Ubuntu/Debian:
+```bash
+apt-get install ripgrep
+```
+MacOS:
+```bash
+brew install rg
+```
