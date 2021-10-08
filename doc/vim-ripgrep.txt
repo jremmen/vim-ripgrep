@@ -1,0 +1,16 @@
+*vim-ripgrep.txt*   Plugin that integrates rg with Vim
+==============================================================================
+INTRODUCTION                                                               *rg*
+
+This plugin is a front for ripgrep: rg. Rg can be used as a replacement for ack
+or ag. This plugin will allow you to run rg from vim, and shows the results in
+a split window.
+
+:Rg[!] [options] {pattern} [{directory}]                                  *:Rg*
+
+    Search recursively in {directory} (which defaults to the current
+    directory) for the {pattern}. Behaves just like the |:grep| command, but
+    will open the |Quickfix| window for you. If [!] is not given the first
+    error is jumped to.
+
+  vim:tw=78:fo=tcq2:ft=help:norl:

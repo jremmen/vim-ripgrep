@@ -33,16 +33,16 @@ fun! s:Rg(txt)
 endfun
 
 fun! s:RgGetVisualSelection()
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+  " Why is this not a built-in Vim script function?!
+  let [line_start, column_start] = getpos("'<")[1:2]
+  let [line_end, column_end] = getpos("'>")[1:2]
+  let lines = getline(line_start, line_end)
+  if len(lines) == 0
+    return ''
+  endif
+  let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][column_start - 1:]
+  return join(lines, "\n")
 endfun
 
 fun! s:RgSearchTerm(txt)
@@ -61,10 +61,18 @@ fun! s:RgSearch(txt)
   if &smartcase == 1
     let l:rgopts = l:rgopts . '-S '
   endif
+
   silent! exe 'grep! ' . l:rgopts . a:txt
   if len(getqflist())
     exe g:rg_window_location 'copen'
     redraw!
+    " Map commands in quickfix window to open files in search results
+    nnoremap <silent> <buffer> h  <C-W><CR><C-w>K
+    nnoremap <silent> <buffer> H  <C-W><CR><C-w>K<C-w>b
+    nnoremap <silent> <buffer> o  <CR>
+    nnoremap <silent> <buffer> t  <C-w><CR><C-w>T
+    nnoremap <silent> <buffer> T  <C-w><CR><C-w>TgT<C-W><C-W>
+    nnoremap <silent> <buffer> v  <C-w><CR><C-w>H<C-W>b<C-W>J<C-W>t
     if exists('g:rg_highlight')
       call s:RgHighlight(a:txt)
     endif
