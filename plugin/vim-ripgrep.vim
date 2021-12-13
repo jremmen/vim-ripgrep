@@ -24,6 +24,24 @@ if !exists('g:rg_window_location')
   let g:rg_window_location = 'botright'
 endif
 
+if !exists('g:rg_use_local_list')
+  let g:rg_use_local_list = 0
+endif
+
+let s:rg_window_cmd = 'copen'
+let s:rg_grep_cmd = 'grep! '
+if g:rg_use_local_list != 0
+	let s:rg_window_cmd = 'lopen'
+	let s:rg_grep_cmd = 'lgrep! '
+end
+
+fun! s:get_match_len()
+	if g:rg_use_local_list != 0
+		return len(getloclist(0))
+	end
+	return len(getqflist())
+endfun
+
 fun! g:RgVisual() range
   call s:RgGrepContext(function('s:RgSearch'), '"' . s:RgGetVisualSelection() . '"')
 endfun
@@ -61,9 +79,9 @@ fun! s:RgSearch(txt)
   if &smartcase == 1
     let l:rgopts = l:rgopts . '-S '
   endif
-  silent! exe 'grep! ' . l:rgopts . a:txt
-  if len(getqflist())
-    exe g:rg_window_location 'copen'
+  silent! exe s:rg_grep_cmd . l:rgopts . a:txt
+  if s:get_match_len()
+    exe g:rg_window_location s:rg_window_cmd
     redraw!
     if exists('g:rg_highlight')
       call s:RgHighlight(a:txt)
