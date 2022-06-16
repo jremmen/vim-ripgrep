@@ -61,7 +61,8 @@ fun! s:RgSearch(txt)
   if &smartcase == 1
     let l:rgopts = l:rgopts . '-S '
   endif
-  silent! exe 'grep! ' . l:rgopts . a:txt
+  " Escaping Command-line special characters '#', '%' (:h :_%), and '|' (:h :bar)
+  silent! exe 'grep! ' . l:rgopts . escape(a:txt, "#%|")
   if len(getqflist())
     exe g:rg_window_location 'copen'
     redraw!
